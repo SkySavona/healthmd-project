@@ -17,12 +17,12 @@ const baseClasses = [
   "group overflow-hidden isolate",
   "focus-visible:outline-none",
   "focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white",
-  "dark:focus-visible:ring-brand-accent motion-reduce:dark:hover:ring-brand-teal  dark:focus-visible:ring-offset-slate-950",
+  "dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950",
   "cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed",
 ].join(" ")
 
 const motionClasses = [
-  "motion-safe:transition-shadow motion-safe:duration-200 motion-safe:ease-out",
+  "motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out",
   "motion-safe:hover:shadow-lg motion-safe:active:shadow-md",
   "motion-reduce:transition-none motion-reduce:hover:shadow-md motion-reduce:active:shadow-sm",
 ].join(" ")
@@ -30,28 +30,51 @@ const motionClasses = [
 const variantClasses = computed(() => {
   if (variant.value === "secondary") {
     return [
-      "bg-transparent text-brand-deep border border-brand-deep/80",
-      "dark:bg-transparent dark:text-brand-accent dark:border-brand-accent/80",
-      "motion-reduce:hover:bg-brand-deep/[0.06]",
-      "motion-reduce:dark:hover:bg-slate-900/80",
+      // base colors
+      "bg-transparent border border-brand-deep/80 text-brand-deep",
+      "dark:bg-transparent dark:border-brand-accent/80 dark:text-brand-accent",
+
+      // hover text color only when motion is allowed
+      "motion-safe:hover:text-white",
+      "motion-safe:group-hover:text-white",
+
+      // on reduce-motion text stays the same in both themes
+      "motion-reduce:hover:text-brand-deep",
+      "motion-reduce:dark:hover:text-brand-accent",
+
+      // ring behavior
+      "hover:ring-2 hover:ring-offset-2 hover:ring-brand-teal",
+      "dark:hover:ring-2 dark:hover:ring-offset-2 dark:hover:ring-brand-accent dark:hover:ring-offset-black",
+
+      // subtle shadow
+      "shadow-md shadow-cyan-100/40 dark:shadow-brand-primary/40",
     ].join(" ")
   }
 
-  // primary
+  // primary button
   return [
-    "bg-brand-deep text-white shadow-md shadow-cyan-100/80 hover:ring-2 hover:ring-offset-2 hover:ring-brand-teal dark:hover:ring-brand-accent ",
-    "dark:bg-brand-deep dark:hover:ring-offset-black dark:text-white dark:shadow-brand-primary/60 dark:hover:text-slate-950",
-    "motion-reduce:hover:bg-brand-hover ",
-    "motion-reduce:dark:hover:bg-brand-deep motion-reduce:dark:hover:text-white ",
+    // base colors
+    "bg-brand-deep text-white shadow-md shadow-cyan-100/80",
+    "dark:bg-brand-deep dark:text-white dark:shadow-brand-primary/60",
+
+    // ring behavior
+    "hover:ring-2 hover:ring-offset-2 hover:ring-brand-teal",
+    "dark:hover:ring-2 dark:hover:ring-offset-2 dark:hover:ring-brand-accent dark:hover:ring-offset-black",
+
+    // only animate text color when motion is allowed
+    "motion-safe:group-hover:text-white",
+
+    // no motion-reduce text classes here
+    // so on prefers-reduced-motion the text stays exactly white in both themes
   ].join(" ")
 })
 
 const overlayClasses = computed(() => {
   if (variant.value === "secondary") {
-    return "bg-brand-deep/10 dark:bg-slate-900/90"
+    return "bg-brand-deep dark:bg-brand-accent origin-right"
   }
 
-  return "bg-brand-hover  dark:bg-brand-accent "
+  return "bg-brand-hover dark:bg-brand-accent origin-left"
 })
 
 const widthClass = computed(() => (props.fullWidth ? "w-full" : "w-auto"))
@@ -60,15 +83,15 @@ const widthClass = computed(() => (props.fullWidth ? "w-full" : "w-auto"))
 <template>
   <button
     :type="props.type || 'button'"
-    :disabled="disabled"
+    :disabled="props.disabled"
     :class="[baseClasses, motionClasses, variantClasses, widthClass]"
   >
-    <!-- left to right solid color fill under the text -->
+    <!-- background sweep -->
     <span
       aria-hidden="true"
       :class="[
         'pointer-events-none absolute inset-0 rounded-full z-0',
-        'origin-left scale-x-0',
+        'scale-x-0',
         'motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out',
         'motion-safe:group-hover:scale-x-100',
         'motion-reduce:hidden',

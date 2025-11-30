@@ -204,7 +204,7 @@ const hasConditions = (history: History) => {
         variant="secondary"
         @click="emit('back')"
       >
-        Back
+       ← Back
       </Button>
 
       <Button

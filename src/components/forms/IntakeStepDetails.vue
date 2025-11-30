@@ -119,7 +119,7 @@ const updateField = (field: keyof Contact, value: string) => {
         variant="secondary"
         @click="emit('back')"
       >
-        Back
+         ← Back
       </Button>
 
       <Button
