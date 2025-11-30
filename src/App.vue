@@ -1,47 +1,29 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+// import HeroSection from './components/HeroSection.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="app-shell">
+    <main class="page">
+      <!-- <HeroSection /> -->
+      <!-- later we can add HowItWorksSection and IntakeSection -->
+    </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background: radial-gradient(circle at top left, #0f172a 0, #020617 40%, #020617 100%);
+  color: #f9fafb;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.page {
+  width: 100%;
+  max-width: 1120px;
+  padding: 3rem 1.5rem;
 }
 </style>
