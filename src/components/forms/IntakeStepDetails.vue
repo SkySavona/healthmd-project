@@ -305,23 +305,25 @@ const handleNext = async () => {
       />
     </fieldset>
 
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-      <Button
-        type="button"
-        variant="secondary"
-        @click="emit('back')"
-      >
-        ← Back
-      </Button>
+   <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
+  <Button
+    type="button"
+    variant="secondary"
+    @click="emit('back')"
+  >
+    ← Back
+  </Button>
 
-      <Button
-        type="button"
-        variant="primary"
-        :disabled="!isFormValid"
-        @click="handleNext"
-      >
-        Review and submit →
-      </Button>
-    </div>
+  <Button
+    type="button"
+    variant="primary"
+    :aria-disabled="!isFormValid"
+    :class="!isFormValid ? 'opacity-60 cursor-not-allowed' : ''"
+    @click="handleNext"
+  >
+    Review and submit →
+  </Button>
+</div>
+
   </div>
 </template>
