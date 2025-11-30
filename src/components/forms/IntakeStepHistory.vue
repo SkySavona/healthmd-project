@@ -150,22 +150,25 @@ const isSelected = (id: string) => props.history.conditions.includes(id)
       />
     </fieldset>
 
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-      <Button
-        type="button"
-        variant="secondary"
-        @click="emit('back')"
-      >
-        ← Back
-      </Button>
+<div class="mt-4 flex flex-col sm:flex-row sm:justify-between items-stretch gap-4">
+  <Button
+    type="button"
+    variant="secondary"
+    class="w-full sm:w-auto"
+    @click="emit('back')"
+  >
+    ← Back
+  </Button>
 
-      <Button
-        type="button"
-        variant="primary"
-        @click="emit('next')"
-      >
-        Next: Contact and visit details →
-      </Button>
-    </div>
+  <Button
+    type="button"
+    variant="primary"
+    class="w-full sm:w-auto"
+    @click="emit('next')"
+  >
+    Next: Contact and visit details →
+  </Button>
+</div>
+
   </div>
 </template>
