@@ -17,12 +17,11 @@ const baseClasses = [
   "group overflow-hidden isolate",
   "focus-visible:outline-none",
   "focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white",
-  "dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950",
+  "dark:focus-visible:ring-brand-accent motion-reduce:dark:hover:ring-brand-teal  dark:focus-visible:ring-offset-slate-950",
   "cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed",
 ].join(" ")
 
 const motionClasses = [
-  // keep animation but do not transform the button itself to avoid text jank
   "motion-safe:transition-shadow motion-safe:duration-200 motion-safe:ease-out",
   "motion-safe:hover:shadow-lg motion-safe:active:shadow-md",
   "motion-reduce:transition-none motion-reduce:hover:shadow-md motion-reduce:active:shadow-sm",
@@ -33,7 +32,6 @@ const variantClasses = computed(() => {
     return [
       "bg-transparent text-brand-deep border border-brand-deep/80",
       "dark:bg-transparent dark:text-brand-accent dark:border-brand-accent/80",
-      // reduced motion fallback - simple subtle bg change
       "motion-reduce:hover:bg-brand-deep/[0.06]",
       "motion-reduce:dark:hover:bg-slate-900/80",
     ].join(" ")
@@ -41,9 +39,8 @@ const variantClasses = computed(() => {
 
   // primary
   return [
-    "bg-brand-deep text-white shadow-md shadow-cyan-100/80 hover:ring-2 hover:ring-offset-2 hover:ring-brand-accent ",
+    "bg-brand-deep text-white shadow-md shadow-cyan-100/80 hover:ring-2 hover:ring-offset-2 hover:ring-brand-teal dark:hover:ring-brand-accent ",
     "dark:bg-brand-deep dark:hover:ring-offset-black dark:text-white dark:shadow-brand-primary/60 dark:hover:text-slate-950",
-    // reduced motion - simple color change only
     "motion-reduce:hover:bg-brand-hover ",
     "motion-reduce:dark:hover:bg-brand-deep motion-reduce:dark:hover:text-white ",
   ].join(" ")
@@ -54,7 +51,7 @@ const overlayClasses = computed(() => {
     return "bg-brand-deep/10 dark:bg-slate-900/90"
   }
 
-  return "bg-brand-accent  dark:bg-brand-accent"
+  return "bg-brand-hover  dark:bg-brand-accent "
 })
 
 const widthClass = computed(() => (props.fullWidth ? "w-full" : "w-auto"))
@@ -79,7 +76,6 @@ const widthClass = computed(() => (props.fullWidth ? "w-full" : "w-auto"))
       ]"
     />
 
-    <!-- content stays on its own stable layer -->
     <span class="relative z-10 flex items-center gap-2">
       <slot />
     </span>
