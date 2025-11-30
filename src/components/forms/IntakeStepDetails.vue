@@ -14,6 +14,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "update:contact", value: Contact): void
   (e: "back"): void
+  (e: "next"): void
 }>()
 
 const updateField = (field: keyof Contact, value: string) => {
@@ -122,10 +123,11 @@ const updateField = (field: keyof Contact, value: string) => {
       </Button>
 
       <Button
-        type="submit"
+        type="button"
         variant="primary"
+        @click="emit('next')"
       >
-        Submit intake and continue →
+        Review and submit →
       </Button>
     </div>
   </div>
