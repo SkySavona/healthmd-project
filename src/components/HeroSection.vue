@@ -3,12 +3,11 @@ import { ref } from "vue"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import {
   faWeightScale,
-  faChartLine,
-  faTriangleExclamation,
   faClinicMedical,
   faPrescriptionBottleMedical,
   faStethoscope,
 } from "@fortawesome/free-solid-svg-icons"
+import Button from "./ui/Button.vue"
 
 const reasons = [
   {
@@ -16,21 +15,7 @@ const reasons = [
     label: "I want help with long term weight loss",
     desc: "You want a sustainable plan with clinical support and realistic goals.",
     icon: faWeightScale,
-    chip: "Weight care",
-  },
-  {
-    id: "weight-follow-up",
-    label: "I need a follow-up or dose adjustment",
-    desc: "You are already in a program and want a dose review.",
-    icon: faChartLine,
-    chip: "Weight care",
-  },
-  {
-    id: "weight-side-effects",
-    label: "I am having side effects",
-    desc: "You want symptoms reviewed and a safer plan.",
-    icon: faTriangleExclamation,
-    chip: "Medications",
+    chip: "Weight Managment",
   },
   {
     id: "med-refill",
@@ -84,7 +69,7 @@ const selectedReason = ref("weight-long-term")
             </p>
           </div>
 
-          <div class="hidden text-right text-xs text-slate-500 sm:block">
+          <div class="hidden text-right text-sm text-slate-500 sm:block">
             <p class="font-semibold text-brand-primary">Step 1 of 3</p>
             <p>Reason for visit</p>
           </div>
@@ -104,7 +89,6 @@ const selectedReason = ref("weight-long-term")
       </header>
 
       <form class="space-y-6">
-        <!-- hidden input so the form still submits a value -->
         <input type="hidden" name="reason" :value="selectedReason" />
 
         <fieldset
@@ -115,7 +99,7 @@ const selectedReason = ref("weight-long-term")
             Select a reason for your visit
           </legend>
 
-          <p id="reason-helper" class="text-xs text-slate-500">
+          <p id="reason-helper" class="text-sm text-slate-500">
             Choose the one that feels closest. You can add more detail later.
           </p>
 
@@ -134,16 +118,15 @@ const selectedReason = ref("weight-long-term")
               @keydown.enter.prevent="selectedReason = reason.id"
               @keydown.space.prevent="selectedReason = reason.id"
               :class="[
-                'group flex w-full flex-col gap-2 rounded-2xl border bg-slate-50/60 p-4 text-left text-sm shadow-sm transition',
-                ' hover:bg-white hover:shadow-md hover:shadow-cyan-50',
+                'group flex w-full flex-col gap-2 rounded-2xl border bg-slate-50/60 p-4 text-left text-sm shadow-sm transition ',
+                'hover:bg-white hover:shadow-md hover:shadow-cyan-50 hover:ring-1 hover:ring-brand-teal',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white cursor-pointer',
                 selectedReason === reason.id
-                  ? 'border-brand-teal bg-white shadow-md shadow-cyan-100'
+                  ? 'border-brand-teal border-2 bg-white shadow-md shadow-cyan-100'
                   : 'border-slate-200'
               ]"
             >
               <div class="flex items-center justify-between gap-3">
-                <!-- dot indicator on the left -->
                 <div
                   class="flex items-center gap-3"
                 >
@@ -161,7 +144,7 @@ const selectedReason = ref("weight-long-term")
                   </span>
 
                   <span
-                    class="rounded-full bg-slate-100 px-3 py-1 text-[0.68rem] font-medium uppercase tracking-wide text-slate-500 group-hover:bg-brand-chip"
+                    class="rounded-full bg-slate-100 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-slate-500 group-hover:bg-brand-chip group-focus:bg-brand-chip"
                   >
                     {{ reason.chip }}
                   </span>
@@ -174,11 +157,11 @@ const selectedReason = ref("weight-long-term")
                 />
               </div>
 
-              <p class="mt-1 text-sm font-semibold text-brand-primary group-hover:text-brand-deep">
+              <p class="mt-1 text-sm font-semibold text-brand-primary group-hover:text-brand-deep group-focus:text-brand-deep">
                 {{ reason.label }}
               </p>
 
-              <p class="text-xs text-slate-600">
+              <p class="text-sm text-slate-600">
                 {{ reason.desc }}
               </p>
             </button>
@@ -186,17 +169,12 @@ const selectedReason = ref("weight-long-term")
         </fieldset>
 
         <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-          <p class="text-xs text-slate-500">
+          <p class="text-sm text-slate-500">
             You can change this later in your visit summary.
           </p>
 
-          <button
-            type="submit"
-            class="inline-flex items-center gap-2 rounded-full bg-brand-deep px-6 py-2 text-sm font-semibold text-white shadow-md shadow-cyan-100/80
-                   transition hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-          >
-            Next: Your health history →
-          </button>
+        <Button type="submit" variant="primary">
+          Next: Your health history →  </Button>
         </div>
       </form>
     </section>
