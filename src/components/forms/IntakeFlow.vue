@@ -10,7 +10,8 @@ const currentStep = ref(1)
 const totalSteps = 5
 
 const formData = reactive({
-  reason: "weight-long-term",
+  // start with no selection
+  reason: "",
   history: {
     conditions: [] as string[],
     meds: "",
@@ -32,7 +33,6 @@ const stepLabel = computed(() => {
   return "Confirmation"
 })
 
-// 🔹 NEW: dynamic H1 text per step
 const stepTitle = computed(() => {
   if (currentStep.value === 1) return "What brings you in today?"
   if (currentStep.value === 2) return "Tell us about your health history"
@@ -41,7 +41,6 @@ const stepTitle = computed(() => {
   return "You’re all set"
 })
 
-// 🔹 NEW: dynamic description per step
 const stepDescription = computed(() => {
   if (currentStep.value === 1) {
     return "This helps us match you with the right clinician and care plan."
@@ -68,7 +67,8 @@ const onBack = () => {
 
 const resetForm = () => {
   currentStep.value = 1
-  formData.reason = "weight-long-term"
+  // clear selection so nothing is checked on fresh start
+  formData.reason = ""
   formData.history.conditions = []
   formData.history.meds = ""
   formData.contact.name = ""
@@ -79,7 +79,6 @@ const resetForm = () => {
 const handleSubmit = () => {
   // replace with real submission logic (API call, etc.)
   console.log("Submitting intake:", JSON.parse(JSON.stringify(formData)))
-  // go to confirmation step
   currentStep.value = 5
 }
 </script>
