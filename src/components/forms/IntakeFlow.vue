@@ -67,7 +67,6 @@ const onBack = () => {
 
 const resetForm = () => {
   currentStep.value = 1
-  // clear selection so nothing is checked on fresh start
   formData.reason = ""
   formData.history.conditions = []
   formData.history.meds = ""
@@ -124,7 +123,7 @@ const handleSubmit = () => {
         aria-valuemax="100"
       >
         <div
-          class="h-full bg-gradient-to-r from-brand-teal via-brand-accent to-brand-deep transition-[width]"
+          class="h-full bg-gradient-to-r from-brand-teal via-brand-accent to-brand-deep motion-safe:transition-[width]"
           :style="{ width: progressPercent + '%' }"
         />
       </div>
@@ -134,44 +133,81 @@ const handleSubmit = () => {
       class="space-y-6"
       @submit.prevent="currentStep === 4 ? handleSubmit() : null"
     >
-      <!-- Step 1: Reason -->
-      <IntakeStepReason
-        v-if="currentStep === 1"
-        v-model:reason="formData.reason"
-        @next="onNext"
-      />
+      <Transition name="intake-step" mode="out-in">
+        <div :key="currentStep">
+          <!-- Step 1: Reason -->
+          <IntakeStepReason
+            v-if="currentStep === 1"
+            v-model:reason="formData.reason"
+            @next="onNext"
+          />
 
-      <!-- Step 2: History -->
-      <IntakeStepHistory
-        v-else-if="currentStep === 2"
-        v-model:history="formData.history"
-        @next="onNext"
-        @back="onBack"
-      />
+          <!-- Step 2: History -->
+          <IntakeStepHistory
+            v-else-if="currentStep === 2"
+            v-model:history="formData.history"
+            @next="onNext"
+            @back="onBack"
+          />
 
-      <!-- Step 3: Contact -->
-      <IntakeStepDetails
-        v-else-if="currentStep === 3"
-        v-model:contact="formData.contact"
-        @next="onNext"
-        @back="onBack"
-      />
+          <!-- Step 3: Contact -->
+          <IntakeStepDetails
+            v-else-if="currentStep === 3"
+            v-model:contact="formData.contact"
+            @next="onNext"
+            @back="onBack"
+          />
 
-      <!-- Step 4: Review -->
-      <IntakeStepReview
-        v-else-if="currentStep === 4"
-        :reason="formData.reason"
-        :history="formData.history"
-        :contact="formData.contact"
-        @back="onBack"
-      />
+          <!-- Step 4: Review -->
+          <IntakeStepReview
+            v-else-if="currentStep === 4"
+            :reason="formData.reason"
+            :history="formData.history"
+            :contact="formData.contact"
+            @back="onBack"
+          />
 
-      <!-- Step 5: Confirmation -->
-      <IntakeStepConfirmation
-        v-else
-        :contact="formData.contact"
-        @startOver="resetForm"
-      />
+          <!-- Step 5: Confirmation -->
+          <IntakeStepConfirmation
+            v-else
+            :contact="formData.contact"
+            @startOver="resetForm"
+          />
+        </div>
+      </Transition>
     </form>
   </section>
 </template>
+
+<style scoped>
+.intake-step-enter-active,
+.intake-step-leave-active {
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.intake-step-enter-from,
+.intake-step-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.intake-step-enter-to,
+.intake-step-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect prefers-reduced-motion: turn the animation into an instant swap */
+@media (prefers-reduced-motion: reduce) {
+  .intake-step-enter-active,
+  .intake-step-leave-active {
+    transition: none;
+  }
+
+  .intake-step-enter-from,
+  .intake-step-leave-to {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>

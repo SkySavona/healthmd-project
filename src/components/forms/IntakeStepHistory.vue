@@ -65,6 +65,8 @@ const updateMeds = (value: string) => {
     meds: value,
   })
 }
+
+const isSelected = (id: string) => props.history.conditions.includes(id)
 </script>
 
 <template>
@@ -88,11 +90,27 @@ const updateMeds = (value: string) => {
         <label
           v-for="condition in conditionsList"
           :key="condition.id"
-          class="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50/60 p-3 text-sm shadow-sm transition hover:bg-white hover:shadow-md hover:shadow-cyan-50 hover:ring-1 hover:ring-brand-teal dark:border-slate-700 dark:bg-slate-900/70 dark:hover:bg-slate-900 dark:hover:shadow-lg dark:hover:shadow-brand-primary/30 dark:hover:ring-brand-accent"
+          :class="[
+            // base card
+            'flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50/60 p-3 text-sm shadow-sm transition',
+            // hover state
+            'hover:bg-white hover:shadow-md hover:shadow-cyan-50 hover:ring-1 hover:ring-brand-teal',
+            'dark:border-slate-700 dark:bg-slate-900/70 dark:hover:bg-slate-900 dark:hover:shadow-lg dark:hover:shadow-brand-primary/30 dark:hover:ring-brand-accent',
+            // focus (keyboard) – clear, WCAG-compliant focus indicator
+            'focus-within:ring-2 focus-within:ring-brand-teal focus-within:ring-offset-2 focus-within:ring-offset-white',
+            'dark:focus-within:ring-brand-accent dark:focus-within:ring-offset-slate-950',
+            // selected state – subtle, does NOT look like focus
+            isSelected(condition.id)
+              ? 'border-brand-teal bg-white/90 dark:border-brand-accent dark:bg-slate-900/90'
+              : ''
+          ]"
         >
           <input
             type="checkbox"
-            class="mt-1 h-4 w-4 rounded border-slate-300 text-brand-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-500 dark:bg-slate-900 dark:text-brand-accent dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
+            class="mt-1 h-4 w-4 rounded border-slate-300 text-brand-teal accent-brand-teal
+         dark:accent-brand-accent
+                   focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0
+                   dark:border-slate-500 dark:bg-slate-900 dark:text-brand-accent"
             :checked="history.conditions.includes(condition.id)"
             :value="condition.id"
             @change="toggleCondition(condition.id, ($event.target as HTMLInputElement).checked)"
