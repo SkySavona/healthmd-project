@@ -112,30 +112,32 @@ const selectedReason = ref("weight-long-term")
             aria-label="Reason for visit"
             class="grid gap-4 md:grid-cols-2"
           >
-            <button
-              v-for="reason in reasons"
-              :key="reason.id"
-              type="button"
-              role="radio"
-              :aria-checked="selectedReason === reason.id"
-              @click="selectedReason = reason.id"
-              @keydown.enter.prevent="selectedReason = reason.id"
-              @keydown.space.prevent="selectedReason = reason.id"
-              :class="[
-                // base card
-                'group flex w-full flex-col gap-2 rounded-2xl border bg-slate-50/60 p-4 text-left text-sm shadow-sm transition',
-                'hover:bg-white hover:shadow-md hover:shadow-cyan-50 hover:ring-1 hover:ring-brand-teal',
-                // dark mode card styling
-                'dark:bg-slate-900/70 dark:border-slate-700 dark:hover:bg-slate-900 dark:hover:shadow-lg dark:hover:shadow-brand-primary/30',
-                // focus ring, with offset adapted for dark
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white',
-                'dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950 cursor-pointer',
-                // selected state
-                selectedReason === reason.id
-                  ? 'border-brand-teal border-2 bg-white shadow-md shadow-cyan-100 dark:bg-brand-primary dark:border-brand-accent dark:shadow-brand-primary/50'
-                  : 'border-slate-200 dark:border-slate-700'
-              ]"
-            >
+           <button
+  v-for="reason in reasons"
+  :key="reason.id"
+  type="button"
+  role="radio"
+  :aria-checked="selectedReason === reason.id"
+  @click="selectedReason = reason.id"
+  @keydown.enter.prevent="selectedReason = reason.id"
+  @keydown.space.prevent="selectedReason = reason.id"
+  :class="[
+    // base card
+    'group flex w-full flex-col gap-2 rounded-2xl border bg-slate-50/60 p-4 text-left text-sm shadow-sm transition',
+    // light hover
+    'hover:bg-white hover:shadow-md hover:shadow-cyan-50 hover:ring-1 hover:ring-brand-teal',
+    // dark base + hover
+    'dark:bg-slate-900/70 dark:border-slate-700 dark:hover:bg-slate-900 dark:hover:shadow-lg dark:hover:shadow-brand-primary/30 dark:hover:ring-brand-accent ',
+    // focus (light)
+    'focus:outline-none focus:ring-1 focus:ring-brand-teal  focus:ring-offset-white',
+    // focus (dark) – matches hover
+    'dark:focus:bg-slate-900 dark:focus:shadow-lg dark:focus:shadow-brand-primary/30 dark:focus:ring-1 dark:focus:ring-brand-accent  dark:focus:ring-offset-slate-950',
+    // selected state
+    selectedReason === reason.id
+      ? 'border-brand-teal border-1 bg-white shadow-md shadow-cyan-100 dark:bg-brand-primary dark:border-brand-accent dark:shadow-brand-primary/50'
+      : 'border-slate-200 dark:border-slate-700'
+  ]"
+>
               <div class="flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
                   <!-- custom radio dot -->
@@ -181,7 +183,7 @@ const selectedReason = ref("weight-long-term")
         </fieldset>
 
         <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-          <p class="text-sm text-slate-500 dark:text-slate-400">
+          <p class="text-sm text-slate-500 dark:text-slate-300">
             You can change this later in your visit summary.
           </p>
 
