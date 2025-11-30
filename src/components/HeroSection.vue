@@ -104,6 +104,9 @@ const selectedReason = ref("weight-long-term")
       </header>
 
       <form class="space-y-6">
+        <!-- hidden input so the form still submits a value -->
+        <input type="hidden" name="reason" :value="selectedReason" />
+
         <fieldset
           class="space-y-4"
           aria-describedby="reason-helper"
@@ -116,55 +119,70 @@ const selectedReason = ref("weight-long-term")
             Choose the one that feels closest. You can add more detail later.
           </p>
 
-          <ul class="grid gap-4 md:grid-cols-2">
-            <li
+          <div
+            role="radiogroup"
+            aria-label="Reason for visit"
+            class="grid gap-4 md:grid-cols-2"
+          >
+            <button
               v-for="reason in reasons"
               :key="reason.id"
+              type="button"
+              role="radio"
+              :aria-checked="selectedReason === reason.id"
+              @click="selectedReason = reason.id"
+              @keydown.enter.prevent="selectedReason = reason.id"
+              @keydown.space.prevent="selectedReason = reason.id"
+              :class="[
+                'group flex w-full flex-col gap-2 rounded-2xl border bg-slate-50/60 p-4 text-left text-sm shadow-sm transition',
+                ' hover:bg-white hover:shadow-md hover:shadow-cyan-50',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white cursor-pointer',
+                selectedReason === reason.id
+                  ? 'border-brand-teal bg-white shadow-md shadow-cyan-100'
+                  : 'border-slate-200'
+              ]"
             >
-              <input
-                v-model="selectedReason"
-                type="radio"
-                name="reason"
-                :id="`reason-${reason.id}`"
-                :value="reason.id"
-                :aria-describedby="`reason-desc-${reason.id}`"
-                class="sr-only peer"
-              />
+              <div class="flex items-center justify-between gap-3">
+                <!-- dot indicator on the left -->
+                <div
+                  class="flex items-center gap-3"
+                >
+                  <span
+                    class="flex h-5 w-5 items-center justify-center rounded-full border-2"
+                    :class="selectedReason === reason.id
+                      ? 'border-brand-deep'
+                      : 'border-slate-300'"
+                    aria-hidden="true"
+                  >
+                    <span
+                      v-if="selectedReason === reason.id"
+                      class="h-2.5 w-2.5 rounded-full bg-brand-deep"
+                    />
+                  </span>
 
-              <label
-                :for="`reason-${reason.id}`"
-                class="group relative flex flex-col gap-2 rounded-2xl border border-slate-200 bg-slate-50/60 p-4 text-sm shadow-sm transition
-                       hover:-translate-y-0.5 hover:bg-white hover:shadow-md hover:shadow-cyan-50
-                       peer-checked:border-brand-teal peer-checked:bg-white peer-checked:shadow-md peer-checked:shadow-cyan-100
-                       peer-focus-visible:ring-2 peer-focus-visible:ring-brand-teal peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-white"
-              >
-                <div class="flex items-center justify-between">
                   <span
                     class="rounded-full bg-slate-100 px-3 py-1 text-[0.68rem] font-medium uppercase tracking-wide text-slate-500 group-hover:bg-brand-chip"
                   >
                     {{ reason.chip }}
                   </span>
-
-                  <FontAwesomeIcon
-                    :icon="reason.icon"
-                    class="text-lg text-brand-teal"
-                    aria-hidden="true"
-                  />
                 </div>
 
-                <p class="text-sm font-semibold text-brand-primary group-hover:text-brand-deep">
-                  {{ reason.label }}
-                </p>
+                <FontAwesomeIcon
+                  :icon="reason.icon"
+                  class="text-lg text-brand-teal"
+                  aria-hidden="true"
+                />
+              </div>
 
-                <p
-                  class="text-xs text-slate-600"
-                  :id="`reason-desc-${reason.id}`"
-                >
-                  {{ reason.desc }}
-                </p>
-              </label>
-            </li>
-          </ul>
+              <p class="mt-1 text-sm font-semibold text-brand-primary group-hover:text-brand-deep">
+                {{ reason.label }}
+              </p>
+
+              <p class="text-xs text-slate-600">
+                {{ reason.desc }}
+              </p>
+            </button>
+          </div>
         </fieldset>
 
         <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
