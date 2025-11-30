@@ -1,29 +1,34 @@
-@import "tailwindcss";
-
 @theme {
   --color-brand-primary: #013047;
-  --color-brand-teal: #0081a2;
-  --color-brand-accent: #00c1b2;
+  --color-brand-teal: #0081a2;      
+  --color-brand-accent: #00c1b2;    
   --color-brand-deep: #006d86;
   --color-brand-hover: #0082a3;
-  --color-brand-chip: #e4f8ff;
+  --color-brand-chip: #f5fcff;
 }
 
 @layer base {
   :root {
     color-scheme: light dark;
+    background-color: #f9fafb;
+    color: #0f172a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      background-color: #020617;
+      color: #e5e7eb;
+    }
   }
 
   *,
   *::before,
   *::after {
-    @apply box-border;
+    box-sizing: border-box;
   }
 
   body {
-    @apply min-h-screen antialiased text-[15px] leading-relaxed;
-    @apply bg-white text-slate-900 transition-colors duration-300;
-    @apply dark:bg-slate-950 dark:text-slate-50;
+    @apply min-h-screen antialiased bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50;
     font-family:
       system-ui,
       -apple-system,
@@ -37,9 +42,5 @@
       "Droid Sans",
       "Helvetica Neue",
       sans-serif;
-  }
-
-  button {
-    cursor: pointer;
   }
 }

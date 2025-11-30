@@ -45,14 +45,14 @@ const selectedReason = ref("weight-long-term")
 
 <template>
   <main
-    class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-4 pb-12 pt-8 lg:flex-row lg:items-stretch lg:px-8"
+    class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-4 pb-12 pt-8 text-slate-900 dark:text-slate-50 lg:flex-row lg:items-stretch lg:px-8"
   >
     <section
-      class="flex-1 rounded-3xl bg-white p-6 shadow-xl shadow-cyan-100/60 ring-1 ring-slate-100"
+      class="flex-1 rounded-3xl bg-white p-6 shadow-xl shadow-cyan-100/60 ring-1 ring-slate-100 dark:bg-slate-900 dark:ring-slate-800 dark:shadow-black/40"
       aria-labelledby="intake-heading"
     >
       <header class="mb-6 space-y-2">
-        <p class="text-xs font-medium uppercase tracking-[0.18em] text-brand-teal">
+        <p class="text-xs font-medium uppercase tracking-[0.18em] text-brand-teal dark:text-brand-accent">
           HealthMD intake
         </p>
 
@@ -60,23 +60,27 @@ const selectedReason = ref("weight-long-term")
           <div>
             <h1
               id="intake-heading"
-              class="text-2xl font-semibold tracking-tight text-brand-primary sm:text-3xl"
+              class="text-2xl font-semibold tracking-tight text-brand-primary dark:text-white sm:text-3xl"
             >
               What brings you in today?
             </h1>
-            <p class="mt-1 text-sm text-slate-600">
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">
               This helps us match you with the right clinician and plan.
             </p>
           </div>
 
-          <div class="hidden text-right text-sm text-slate-500 sm:block">
-            <p class="font-semibold text-brand-primary">Step 1 of 3</p>
-            <p>Reason for visit</p>
+          <div class="hidden text-right text-sm text-slate-500 dark:text-slate-300 sm:block">
+            <p class="font-semibold text-brand-primary dark:text-brand-chip">
+              Step 1 of 3
+            </p>
+            <p>
+              Reason for visit
+            </p>
           </div>
         </div>
 
         <div
-          class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
+          class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"
           role="progressbar"
           aria-valuenow="33"
           aria-valuemin="0"
@@ -99,7 +103,7 @@ const selectedReason = ref("weight-long-term")
             Select a reason for your visit
           </legend>
 
-          <p id="reason-helper" class="text-sm text-slate-500">
+          <p id="reason-helper" class="text-sm text-slate-500 dark:text-slate-300">
             Choose the one that feels closest. You can add more detail later.
           </p>
 
@@ -118,33 +122,39 @@ const selectedReason = ref("weight-long-term")
               @keydown.enter.prevent="selectedReason = reason.id"
               @keydown.space.prevent="selectedReason = reason.id"
               :class="[
-                'group flex w-full flex-col gap-2 rounded-2xl border bg-slate-50/60 p-4 text-left text-sm shadow-sm transition ',
+                // base card
+                'group flex w-full flex-col gap-2 rounded-2xl border bg-slate-50/60 p-4 text-left text-sm shadow-sm transition',
                 'hover:bg-white hover:shadow-md hover:shadow-cyan-50 hover:ring-1 hover:ring-brand-teal',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white cursor-pointer',
+                // dark mode card styling
+                'dark:bg-slate-900/70 dark:border-slate-700 dark:hover:bg-slate-900 dark:hover:shadow-lg dark:hover:shadow-brand-primary/30',
+                // focus ring, with offset adapted for dark
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white',
+                'dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950 cursor-pointer',
+                // selected state
                 selectedReason === reason.id
-                  ? 'border-brand-teal border-2 bg-white shadow-md shadow-cyan-100'
-                  : 'border-slate-200'
+                  ? 'border-brand-teal border-2 bg-white shadow-md shadow-cyan-100 dark:bg-brand-primary dark:border-brand-accent dark:shadow-brand-primary/50'
+                  : 'border-slate-200 dark:border-slate-700'
               ]"
             >
               <div class="flex items-center justify-between gap-3">
-                <div
-                  class="flex items-center gap-3"
-                >
+                <div class="flex items-center gap-3">
+                  <!-- custom radio dot -->
                   <span
                     class="flex h-5 w-5 items-center justify-center rounded-full border-2"
                     :class="selectedReason === reason.id
-                      ? 'border-brand-deep'
-                      : 'border-slate-300'"
+                      ? 'border-brand-deep dark:border-brand-chip'
+                      : 'border-slate-300 dark:border-slate-500'"
                     aria-hidden="true"
                   >
                     <span
                       v-if="selectedReason === reason.id"
-                      class="h-2.5 w-2.5 rounded-full bg-brand-deep"
+                      class="h-2.5 w-2.5 rounded-full bg-brand-deep dark:bg-brand-chip"
                     />
                   </span>
 
+                  <!-- chip -->
                   <span
-                    class="rounded-full bg-slate-100 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-slate-500 group-hover:bg-brand-chip group-focus:bg-brand-chip"
+                    class="rounded-full bg-slate-100 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-slate-500 group-hover:bg-brand-chip group-focus:bg-brand-chip dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-slate-700 dark:group-focus:bg-slate-700"
                   >
                     {{ reason.chip }}
                   </span>
@@ -152,16 +162,18 @@ const selectedReason = ref("weight-long-term")
 
                 <FontAwesomeIcon
                   :icon="reason.icon"
-                  class="text-lg text-brand-teal"
+                  class="text-lg text-brand-teal dark:text-brand-accent"
                   aria-hidden="true"
                 />
               </div>
 
-              <p class="mt-1 text-sm font-semibold text-brand-primary group-hover:text-brand-deep group-focus:text-brand-deep">
+              <p
+                class="mt-1 text-sm font-semibold text-brand-primary group-hover:text-brand-deep group-focus:text-brand-deep dark:text-brand-chip dark:group-hover:text-white dark:group-focus:text-white"
+              >
                 {{ reason.label }}
               </p>
 
-              <p class="text-sm text-slate-600">
+              <p class="text-sm text-slate-600 dark:text-slate-300">
                 {{ reason.desc }}
               </p>
             </button>
@@ -169,12 +181,13 @@ const selectedReason = ref("weight-long-term")
         </fieldset>
 
         <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-          <p class="text-sm text-slate-500">
+          <p class="text-sm text-slate-500 dark:text-slate-400">
             You can change this later in your visit summary.
           </p>
 
-        <Button type="submit" variant="primary">
-          Next: Your health history →  </Button>
+          <Button type="submit" variant="primary">
+            Next: Your health history →
+          </Button>
         </div>
       </form>
     </section>
