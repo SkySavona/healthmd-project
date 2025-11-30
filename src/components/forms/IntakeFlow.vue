@@ -32,6 +32,32 @@ const stepLabel = computed(() => {
   return "Confirmation"
 })
 
+// 🔹 NEW: dynamic H1 text per step
+const stepTitle = computed(() => {
+  if (currentStep.value === 1) return "What brings you in today?"
+  if (currentStep.value === 2) return "Tell us about your health history"
+  if (currentStep.value === 3) return "How can we reach you?"
+  if (currentStep.value === 4) return "Review your details before you submit"
+  return "You’re all set"
+})
+
+// 🔹 NEW: dynamic description per step
+const stepDescription = computed(() => {
+  if (currentStep.value === 1) {
+    return "This helps us match you with the right clinician and care plan."
+  }
+  if (currentStep.value === 2) {
+    return "A brief medical snapshot helps your clinician tailor safe, effective care."
+  }
+  if (currentStep.value === 3) {
+    return "We’ll use this contact info to share appointment details and secure visit links."
+  }
+  if (currentStep.value === 4) {
+    return "Double-check everything looks right before you send your intake to the team."
+  }
+  return "We’ve received your intake. Our clinical team will follow up with next steps."
+})
+
 const onNext = () => {
   if (currentStep.value < totalSteps) currentStep.value++
 }
@@ -74,10 +100,10 @@ const handleSubmit = () => {
             id="intake-heading"
             class="text-2xl font-semibold tracking-tight text-brand-primary dark:text-white sm:text-3xl"
           >
-            What brings you in today?
+            {{ stepTitle }}
           </h1>
           <p class="mt-1 text-sm text-slate-600 dark:text-slate-300">
-            This helps us match you with the right clinician and plan.
+            {{ stepDescription }}
           </p>
         </div>
 
@@ -132,7 +158,7 @@ const handleSubmit = () => {
         @back="onBack"
       />
 
-      <!-- Step 4: Review (form submit lives here) -->
+      <!-- Step 4: Review -->
       <IntakeStepReview
         v-else-if="currentStep === 4"
         :reason="formData.reason"

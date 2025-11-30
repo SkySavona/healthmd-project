@@ -138,7 +138,7 @@ const updateMeds = (value: string) => {
         variant="secondary"
         @click="emit('back')"
       >
-        Back
+        ← Back
       </Button>
 
       <Button
