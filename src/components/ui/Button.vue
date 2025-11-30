@@ -35,10 +35,11 @@ const variantClasses = computed(() => {
       "dark:bg-transparent dark:border-brand-accent/80 dark:text-brand-accent",
 
       // hover text color only when motion is allowed
-      "motion-safe:hover:text-white",
-      "motion-safe:group-hover:text-white",
+      // light mode: white, dark mode: brand-primary
+      "motion-safe:hover:text-white dark:motion-safe:hover:text-brand-primary",
+      "motion-safe:group-hover:text-white dark:motion-safe:group-hover:text-brand-primary",
 
-      // on reduce-motion text stays the same in both themes
+      // on reduce motion text stays the same
       "motion-reduce:hover:text-brand-deep",
       "motion-reduce:dark:hover:text-brand-accent",
 
@@ -61,11 +62,11 @@ const variantClasses = computed(() => {
     "hover:ring-2 hover:ring-offset-2 hover:ring-brand-teal",
     "dark:hover:ring-2 dark:hover:ring-offset-2 dark:hover:ring-brand-accent dark:hover:ring-offset-black",
 
-    // only animate text color when motion is allowed
-    "motion-safe:group-hover:text-white",
+    // hover text color only when motion is allowed
+    "motion-safe:hover:text-white",
+    "dark:motion-safe:hover:text-brand-primary",
 
-    // no motion-reduce text classes here
-    // so on prefers-reduced-motion the text stays exactly white in both themes
+    // no motion-reduce text utilities so text stays white there
   ].join(" ")
 })
 
