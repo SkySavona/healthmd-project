@@ -1,0 +1,186 @@
+<script setup>
+import { ref } from "vue"
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import {
+  faWeightScale,
+  faChartLine,
+  faTriangleExclamation,
+  faClinicMedical,
+  faPrescriptionBottleMedical,
+  faStethoscope,
+} from "@fortawesome/free-solid-svg-icons"
+
+const reasons = [
+  {
+    id: "weight-long-term",
+    label: "I want help with long term weight loss",
+    desc: "You want a sustainable plan with clinical support and realistic goals.",
+    icon: faWeightScale,
+    chip: "Weight care",
+  },
+  {
+    id: "weight-follow-up",
+    label: "I need a follow-up or dose adjustment",
+    desc: "You are already in a program and want a dose review.",
+    icon: faChartLine,
+    chip: "Weight care",
+  },
+  {
+    id: "weight-side-effects",
+    label: "I am having side effects",
+    desc: "You want symptoms reviewed and a safer plan.",
+    icon: faTriangleExclamation,
+    chip: "Medications",
+  },
+  {
+    id: "med-refill",
+    label: "I need a medication refill or review",
+    desc: "You need renewals or help with current meds.",
+    icon: faPrescriptionBottleMedical,
+    chip: "Medications",
+  },
+  {
+    id: "urgent-care",
+    label: "I have an urgent or new health concern",
+    desc: "Quick care for infections, cold and flu, minor issues.",
+    icon: faClinicMedical,
+    chip: "Urgent care",
+  },
+  {
+    id: "primary-care",
+    label: "I want primary care support",
+    desc: "Ongoing management and preventative care.",
+    icon: faStethoscope,
+    chip: "Primary care",
+  },
+]
+
+const selectedReason = ref("weight-long-term")
+</script>
+
+<template>
+  <main
+    class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-4 pb-12 pt-8 lg:flex-row lg:items-stretch lg:px-8"
+  >
+    <section
+      class="flex-1 rounded-3xl bg-white p-6 shadow-xl shadow-cyan-100/60 ring-1 ring-slate-100"
+      aria-labelledby="intake-heading"
+    >
+      <header class="mb-6 space-y-2">
+        <p class="text-xs font-medium uppercase tracking-[0.18em] text-brand-teal">
+          HealthMD intake
+        </p>
+
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <h1
+              id="intake-heading"
+              class="text-2xl font-semibold tracking-tight text-brand-primary sm:text-3xl"
+            >
+              What brings you in today?
+            </h1>
+            <p class="mt-1 text-sm text-slate-600">
+              This helps us match you with the right clinician and plan.
+            </p>
+          </div>
+
+          <div class="hidden text-right text-xs text-slate-500 sm:block">
+            <p class="font-semibold text-brand-primary">Step 1 of 3</p>
+            <p>Reason for visit</p>
+          </div>
+        </div>
+
+        <div
+          class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
+          role="progressbar"
+          aria-valuenow="33"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div
+            class="h-full w-1/3 bg-gradient-to-r from-brand-teal via-brand-accent to-brand-deep"
+          />
+        </div>
+      </header>
+
+      <form class="space-y-6">
+        <fieldset
+          class="space-y-4"
+          aria-describedby="reason-helper"
+        >
+          <legend class="sr-only">
+            Select a reason for your visit
+          </legend>
+
+          <p id="reason-helper" class="text-xs text-slate-500">
+            Choose the one that feels closest. You can add more detail later.
+          </p>
+
+          <ul class="grid gap-4 md:grid-cols-2">
+            <li
+              v-for="reason in reasons"
+              :key="reason.id"
+            >
+              <input
+                v-model="selectedReason"
+                type="radio"
+                name="reason"
+                :id="`reason-${reason.id}`"
+                :value="reason.id"
+                :aria-describedby="`reason-desc-${reason.id}`"
+                class="sr-only peer"
+              />
+
+              <label
+                :for="`reason-${reason.id}`"
+                class="group relative flex flex-col gap-2 rounded-2xl border border-slate-200 bg-slate-50/60 p-4 text-sm shadow-sm transition
+                       hover:-translate-y-0.5 hover:bg-white hover:shadow-md hover:shadow-cyan-50
+                       peer-checked:border-brand-teal peer-checked:bg-white peer-checked:shadow-md peer-checked:shadow-cyan-100
+                       peer-focus-visible:ring-2 peer-focus-visible:ring-brand-teal peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-white"
+              >
+                <div class="flex items-center justify-between">
+                  <span
+                    class="rounded-full bg-slate-100 px-3 py-1 text-[0.68rem] font-medium uppercase tracking-wide text-slate-500 group-hover:bg-brand-chip"
+                  >
+                    {{ reason.chip }}
+                  </span>
+
+                  <FontAwesomeIcon
+                    :icon="reason.icon"
+                    class="text-lg text-brand-teal"
+                    aria-hidden="true"
+                  />
+                </div>
+
+                <p class="text-sm font-semibold text-brand-primary group-hover:text-brand-deep">
+                  {{ reason.label }}
+                </p>
+
+                <p
+                  class="text-xs text-slate-600"
+                  :id="`reason-desc-${reason.id}`"
+                >
+                  {{ reason.desc }}
+                </p>
+              </label>
+            </li>
+          </ul>
+        </fieldset>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
+          <p class="text-xs text-slate-500">
+            You can change this later in your visit summary.
+          </p>
+
+          <button
+            type="submit"
+            class="inline-flex items-center gap-2 rounded-full bg-brand-deep px-6 py-2 text-sm font-semibold text-white shadow-md shadow-cyan-100/80
+                   transition hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+          >
+            Next: Your health history →
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+</template>

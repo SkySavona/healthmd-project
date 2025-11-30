@@ -1,9 +1,17 @@
 @import "tailwindcss";
 
-/* Optional global base styles */
+@theme {
+  --color-brand-primary: #013047;
+  --color-brand-teal: #00a3c4;
+  --color-brand-accent: #00c1b2;
+  --color-brand-deep: #006d86;
+  --color-brand-hover: #0082a3;
+  --color-brand-chip: #e4f8ff;
+}
+
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 antialiased;
+    @apply  antialiased;
     margin: 0;
   }
 }
