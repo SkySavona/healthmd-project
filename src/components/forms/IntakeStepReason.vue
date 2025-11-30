@@ -55,6 +55,7 @@ const selectReason = (id: string) => {
 
 <template>
   <div class="space-y-6">
+    <!-- keeps value in the eventual form post -->
     <input type="hidden" name="reason" :value="reason" />
 
     <fieldset
@@ -65,13 +66,29 @@ const selectReason = (id: string) => {
         Select a reason for your visit
       </legend>
 
-      <p id="reason-helper" class="text-sm text-slate-500 dark:text-slate-300">
+      <div class="flex items-baseline gap-2">
+        <p
+          id="reason-label"
+          class="text-sm font-medium text-slate-700 dark:text-slate-200"
+        >
+          Reason for your visit
+          <span class="text-rose-700 dark:text-rose-400">*Required</span>
+          <span class="sr-only">(required)</span>
+        </p>
+      </div>
+
+      <p
+        id="reason-helper"
+        class="text-sm text-slate-500 dark:text-slate-300"
+      >
         Choose the one that feels closest. You can add more detail later.
       </p>
 
       <div
         role="radiogroup"
-        aria-label="Reason for visit"
+        aria-labelledby="reason-label"
+        aria-describedby="reason-helper"
+        aria-required="true"
         class="grid gap-4 md:grid-cols-2"
       >
         <button
@@ -143,7 +160,12 @@ const selectReason = (id: string) => {
         You can change this later in your visit summary.
       </p>
 
-      <Button type="button" variant="primary" @click="emit('next')">
+      <Button
+        type="button"
+        variant="primary"
+        :disabled="!reason"
+        @click="emit('next')"
+      >
         Next: Your health history →
       </Button>
     </div>

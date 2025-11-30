@@ -10,7 +10,8 @@ const currentStep = ref(1)
 const totalSteps = 5
 
 const formData = reactive({
-  reason: "weight-long-term",
+  // start with no selection
+  reason: "",
   history: {
     conditions: [] as string[],
     meds: "",
@@ -32,7 +33,6 @@ const stepLabel = computed(() => {
   return "Confirmation"
 })
 
-// 🔹 NEW: dynamic H1 text per step
 const stepTitle = computed(() => {
   if (currentStep.value === 1) return "What brings you in today?"
   if (currentStep.value === 2) return "Tell us about your health history"
@@ -41,7 +41,6 @@ const stepTitle = computed(() => {
   return "You’re all set"
 })
 
-// 🔹 NEW: dynamic description per step
 const stepDescription = computed(() => {
   if (currentStep.value === 1) {
     return "This helps us match you with the right clinician and care plan."
@@ -68,7 +67,7 @@ const onBack = () => {
 
 const resetForm = () => {
   currentStep.value = 1
-  formData.reason = "weight-long-term"
+  formData.reason = ""
   formData.history.conditions = []
   formData.history.meds = ""
   formData.contact.name = ""
@@ -79,7 +78,6 @@ const resetForm = () => {
 const handleSubmit = () => {
   // replace with real submission logic (API call, etc.)
   console.log("Submitting intake:", JSON.parse(JSON.stringify(formData)))
-  // go to confirmation step
   currentStep.value = 5
 }
 </script>
@@ -125,7 +123,7 @@ const handleSubmit = () => {
         aria-valuemax="100"
       >
         <div
-          class="h-full bg-gradient-to-r from-brand-teal via-brand-accent to-brand-deep transition-[width]"
+          class="h-full bg-gradient-to-r from-brand-teal via-brand-accent to-brand-deep motion-safe:transition-[width]"
           :style="{ width: progressPercent + '%' }"
         />
       </div>
@@ -135,44 +133,81 @@ const handleSubmit = () => {
       class="space-y-6"
       @submit.prevent="currentStep === 4 ? handleSubmit() : null"
     >
-      <!-- Step 1: Reason -->
-      <IntakeStepReason
-        v-if="currentStep === 1"
-        v-model:reason="formData.reason"
-        @next="onNext"
-      />
+      <Transition name="intake-step" mode="out-in">
+        <div :key="currentStep">
+          <!-- Step 1: Reason -->
+          <IntakeStepReason
+            v-if="currentStep === 1"
+            v-model:reason="formData.reason"
+            @next="onNext"
+          />
 
-      <!-- Step 2: History -->
-      <IntakeStepHistory
-        v-else-if="currentStep === 2"
-        v-model:history="formData.history"
-        @next="onNext"
-        @back="onBack"
-      />
+          <!-- Step 2: History -->
+          <IntakeStepHistory
+            v-else-if="currentStep === 2"
+            v-model:history="formData.history"
+            @next="onNext"
+            @back="onBack"
+          />
 
-      <!-- Step 3: Contact -->
-      <IntakeStepDetails
-        v-else-if="currentStep === 3"
-        v-model:contact="formData.contact"
-        @next="onNext"
-        @back="onBack"
-      />
+          <!-- Step 3: Contact -->
+          <IntakeStepDetails
+            v-else-if="currentStep === 3"
+            v-model:contact="formData.contact"
+            @next="onNext"
+            @back="onBack"
+          />
 
-      <!-- Step 4: Review -->
-      <IntakeStepReview
-        v-else-if="currentStep === 4"
-        :reason="formData.reason"
-        :history="formData.history"
-        :contact="formData.contact"
-        @back="onBack"
-      />
+          <!-- Step 4: Review -->
+          <IntakeStepReview
+            v-else-if="currentStep === 4"
+            :reason="formData.reason"
+            :history="formData.history"
+            :contact="formData.contact"
+            @back="onBack"
+          />
 
-      <!-- Step 5: Confirmation -->
-      <IntakeStepConfirmation
-        v-else
-        :contact="formData.contact"
-        @startOver="resetForm"
-      />
+          <!-- Step 5: Confirmation -->
+          <IntakeStepConfirmation
+            v-else
+            :contact="formData.contact"
+            @startOver="resetForm"
+          />
+        </div>
+      </Transition>
     </form>
   </section>
 </template>
+
+<style scoped>
+.intake-step-enter-active,
+.intake-step-leave-active {
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.intake-step-enter-from,
+.intake-step-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.intake-step-enter-to,
+.intake-step-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect prefers-reduced-motion: turn the animation into an instant swap */
+@media (prefers-reduced-motion: reduce) {
+  .intake-step-enter-active,
+  .intake-step-leave-active {
+    transition: none;
+  }
+
+  .intake-step-enter-from,
+  .intake-step-leave-to {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
