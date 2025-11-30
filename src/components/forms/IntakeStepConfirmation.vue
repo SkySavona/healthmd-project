@@ -45,7 +45,7 @@ const emit = defineEmits<{
       </p>
     </div>
 
-    <div class="text-sm text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
+    <div class="text-sm text-slate-500 dark:text-slate-300 max-w-sm leading-relaxed">
       We will contact you at
       <span class="font-medium text-brand-primary dark:text-brand-accent">
         {{ contact?.email || "your email" }}
@@ -66,7 +66,7 @@ const emit = defineEmits<{
         New intake
       </Button>
     </div>
-    <p class="mt-4 text-sm  text-slate-500 dark:text-slate-500 max-w-xs">
+    <p class="mt-4 text-sm  text-slate-500 dark:text-slate-300 max-w-xs">
       If something isn’t correct, let your clinician know when your appointment begins.
     </p>
   </div>
