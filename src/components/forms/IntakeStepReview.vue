@@ -10,6 +10,7 @@ type Contact = {
   name: string
   email: string
   phone: string
+  note: string
 }
 
 const props = defineProps<{
@@ -140,7 +141,7 @@ const hasConditions = (history: History) => {
 
           <p
             v-if="history.meds.trim().length"
-            class="mt-1 whitespace-pre-line text-slate-700 dark:text-slate-200"
+            class="mt-1 whitespace-pre-wrap break-words text-slate-700 dark:text-slate-200"
           >
             {{ history.meds }}
           </p>
@@ -175,6 +176,7 @@ const hasConditions = (history: History) => {
             {{ contact.name || "Not provided" }}
           </dd>
         </div>
+
         <div>
           <dt class="text-slate-500 dark:text-slate-400">
             Mobile number
@@ -183,12 +185,24 @@ const hasConditions = (history: History) => {
             {{ contact.phone || "Not provided" }}
           </dd>
         </div>
+
         <div class="sm:col-span-2">
           <dt class="text-slate-500 dark:text-slate-400">
             Email
           </dt>
           <dd class="text-slate-900 dark:text-slate-100">
             {{ contact.email || "Not provided" }}
+          </dd>
+        </div>
+
+        <div class="sm:col-span-2">
+          <dt class="text-slate-500 dark:text-slate-400">
+            Message for your clinician
+          </dt>
+          <dd
+            class="text-slate-900 dark:text-slate-100 whitespace-pre-wrap break-words"
+          >
+            {{ contact.note || "No additional notes provided." }}
           </dd>
         </div>
       </dl>
@@ -204,7 +218,7 @@ const hasConditions = (history: History) => {
         variant="secondary"
         @click="emit('back')"
       >
-       ← Back
+        ← Back
       </Button>
 
       <Button

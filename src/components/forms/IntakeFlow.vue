@@ -10,7 +10,6 @@ const currentStep = ref(1)
 const totalSteps = 5
 
 const formData = reactive({
-  // start with no selection
   reason: "",
   history: {
     conditions: [] as string[],
@@ -20,6 +19,7 @@ const formData = reactive({
     name: "",
     email: "",
     phone: "",
+    note: "",
   },
 })
 
@@ -38,7 +38,7 @@ const stepTitle = computed(() => {
   if (currentStep.value === 2) return "Tell us about your health history"
   if (currentStep.value === 3) return "How can we reach you?"
   if (currentStep.value === 4) return "Review your details before you submit"
-  return "You’re all set"
+  return "You are all set"
 })
 
 const stepDescription = computed(() => {
@@ -49,12 +49,12 @@ const stepDescription = computed(() => {
     return "A brief medical snapshot helps your clinician tailor safe, effective care."
   }
   if (currentStep.value === 3) {
-    return "We’ll use this contact info to share appointment details and secure visit links."
+    return "We will use this contact info to share appointment details and secure visit links."
   }
   if (currentStep.value === 4) {
-    return "Double-check everything looks right before you send your intake to the team."
+    return "Double check everything looks right before you send your intake to the team."
   }
-  return "We’ve received your intake. Our clinical team will follow up with next steps."
+  return "We have received your intake. Our clinical team will follow up with next steps."
 })
 
 const onNext = () => {
@@ -73,10 +73,10 @@ const resetForm = () => {
   formData.contact.name = ""
   formData.contact.email = ""
   formData.contact.phone = ""
+  formData.contact.note = ""
 }
 
 const handleSubmit = () => {
-  // replace with real submission logic (API call, etc.)
   console.log("Submitting intake:", JSON.parse(JSON.stringify(formData)))
   currentStep.value = 5
 }
@@ -135,14 +135,12 @@ const handleSubmit = () => {
     >
       <Transition name="intake-step" mode="out-in">
         <div :key="currentStep">
-          <!-- Step 1: Reason -->
           <IntakeStepReason
             v-if="currentStep === 1"
             v-model:reason="formData.reason"
             @next="onNext"
           />
 
-          <!-- Step 2: History -->
           <IntakeStepHistory
             v-else-if="currentStep === 2"
             v-model:history="formData.history"
@@ -150,7 +148,6 @@ const handleSubmit = () => {
             @back="onBack"
           />
 
-          <!-- Step 3: Contact -->
           <IntakeStepDetails
             v-else-if="currentStep === 3"
             v-model:contact="formData.contact"
@@ -158,7 +155,6 @@ const handleSubmit = () => {
             @back="onBack"
           />
 
-          <!-- Step 4: Review -->
           <IntakeStepReview
             v-else-if="currentStep === 4"
             :reason="formData.reason"
@@ -167,7 +163,6 @@ const handleSubmit = () => {
             @back="onBack"
           />
 
-          <!-- Step 5: Confirmation -->
           <IntakeStepConfirmation
             v-else
             :contact="formData.contact"
@@ -197,7 +192,6 @@ const handleSubmit = () => {
   transform: translateY(0);
 }
 
-/* Respect prefers-reduced-motion: turn the animation into an instant swap */
 @media (prefers-reduced-motion: reduce) {
   .intake-step-enter-active,
   .intake-step-leave-active {

@@ -6,6 +6,7 @@ type Contact = {
   name: string
   email: string
   phone: string
+  note: string
 }
 
 const props = defineProps<{
@@ -18,12 +19,10 @@ const emit = defineEmits<{
   (e: "next"): void
 }>()
 
-// Refs for focusing first invalid field
 const nameInput = ref<HTMLInputElement | null>(null)
 const phoneInput = ref<HTMLInputElement | null>(null)
 const emailInput = ref<HTMLInputElement | null>(null)
 
-// Simple error state
 const errors = ref<{
   name?: string
   email?: string
@@ -33,7 +32,6 @@ const errors = ref<{
 const hasErrors = computed(() => Object.keys(errors.value).length > 0)
 
 const updateField = (field: keyof Contact, value: string) => {
-  // Clear error for that field when user types
   if (errors.value[field]) {
     const newErrors = { ...errors.value }
     delete newErrors[field]
@@ -46,7 +44,6 @@ const updateField = (field: keyof Contact, value: string) => {
   })
 }
 
-// Used for both button disabled state and submit validation
 const basicEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const isFormValid = computed(() => {
@@ -70,19 +67,16 @@ const validate = async () => {
   const phoneRaw = props.contact.phone.trim()
   const phoneDigits = phoneRaw.replace(/\D/g, "")
 
-  // Name: required, suggest full name
   if (!name) {
     newErrors.name = "Enter your full name, like Jane Doe."
   }
 
-  // Email: required + simple pattern + suggestion
   if (!email) {
     newErrors.email = "Enter your email address, like you@example.com."
   } else if (!basicEmail.test(email)) {
     newErrors.email = "Enter a valid email address, like name@example.com."
   }
 
-  // Phone: required + at least 10 digits + suggestion
   if (!phoneRaw) {
     newErrors.phone = "Enter your mobile number, like 555-555-5555."
   } else if (phoneDigits.length < 10) {
@@ -96,7 +90,6 @@ const validate = async () => {
     return true
   }
 
-  // Focus first invalid field for a11y
   await nextTick()
   if (newErrors.name && nameInput.value) {
     nameInput.value.focus()
@@ -134,15 +127,13 @@ const handleNext = async () => {
         We use this info to send appointment details and secure visit links.
       </p>
 
-      <!-- Error summary for SR + sighted users -->
       <p
         v-if="hasErrors"
         id="contact-errors"
         class="text-sm font-medium text-rose-700 dark:text-rose-400"
         role="alert"
       >
-        There’s a problem with some of the contact details. Check the fields
-        marked in red and follow the examples in each label.
+        There is a problem with some of the contact details. Check the fields marked in red and follow the examples in each label.
       </p>
 
       <div class="grid gap-4 md:grid-cols-2">
@@ -293,8 +284,7 @@ const handleNext = async () => {
       </legend>
 
       <p class="text-sm text-slate-500 dark:text-slate-300">
-        You can share goals, timing preferences, or any concerns you would like
-        your clinician to see first.
+        You can share goals, timing preferences, or any concerns you would like your clinician to see first.
       </p>
 
       <textarea
@@ -302,10 +292,12 @@ const handleNext = async () => {
         rows="4"
         class="block w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
         placeholder="Optional: Tell us about your goals, timing, or anything important to you."
+        :value="contact.note"
+        @input="updateField('note', ($event.target as HTMLTextAreaElement).value)"
       />
     </fieldset>
 
-     <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
       <Button
         type="button"
         variant="secondary"
@@ -313,7 +305,6 @@ const handleNext = async () => {
       >
         ← Back
       </Button>
-
       <Button
         type="button"
         variant="primary"
@@ -324,7 +315,5 @@ const handleNext = async () => {
         Review and submit →
       </Button>
     </div>
-
-
   </div>
 </template>
