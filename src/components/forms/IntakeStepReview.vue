@@ -110,7 +110,7 @@ const hasConditions = (history: History) => {
                 <li
                   v-for="condition in history.conditions"
                   :key="condition"
-                  class="rounded-full bg-white px-3 py-1 text-xs text-slate-700 shadow-sm dark:bg-slate-800 dark:text-slate-100"
+                  class="mt-1 inline-flex items-center rounded-full bg-brand-chip px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-brand-primary dark:bg-slate-800 dark:text-slate-100"
                 >
                   {{ condition }}
                 </li>
