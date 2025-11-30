@@ -212,7 +212,7 @@ const hasConditions = (history: History) => {
       By submitting, you agree to receive visit reminders and clinical messages related to your care.
     </p>
 
-    <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
+    <div class="mt-4 flex flex-col sm:flex-row sm:justify-between items-stretch gap-4">
       <Button
         type="button"
         variant="secondary"
