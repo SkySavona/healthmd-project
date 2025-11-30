@@ -10,17 +10,29 @@ const props = defineProps<{
   fullWidth?: boolean
 }>()
 
-const variant = computed<Variant>(() => props.variant || "primary")
+const variant = computed(() => props.variant || "primary")
+
+// Disabled appearance ONLY — kills animations, hover, and rings
+const disabledClasses = [
+  "disabled:bg-gray-300 disabled:text-gray-500 disabled:border-gray-400",
+  "dark:disabled:bg-gray-700 dark:disabled:text-gray-400 dark:disabled:border-gray-600",
+  "disabled:shadow-none",
+  "disabled:hover:none disabled:active:none",
+  "disabled:transition-none",
+  "disabled:scale-100"
+].join(" ")
 
 const baseClasses = [
   "relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-2 text-sm font-semibold",
-  "group overflow-hidden isolate",
+  "group overflow-hidden isolate select-none",
   "focus-visible:outline-none",
   "focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white",
   "dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950",
-  "cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed",
+  "cursor-pointer disabled:cursor-not-allowed",
+  disabledClasses,
 ].join(" ")
 
+// Only runs when NOT disabled
 const motionClasses = [
   "motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out",
   "motion-safe:hover:shadow-lg motion-safe:active:shadow-md",
@@ -30,53 +42,28 @@ const motionClasses = [
 const variantClasses = computed(() => {
   if (variant.value === "secondary") {
     return [
-      // base colors
       "bg-transparent border border-brand-deep/80 text-brand-deep",
       "dark:bg-transparent dark:border-brand-accent/80 dark:text-brand-accent",
-
-      // hover text color only when motion is allowed
-      // light mode: white, dark mode: brand-primary
       "motion-safe:hover:text-white dark:motion-safe:hover:text-brand-primary",
-      "motion-safe:group-hover:text-white dark:motion-safe:group-hover:text-brand-primary",
-
-      // on reduce motion text stays the same
-      "motion-reduce:hover:text-brand-deep",
-      "motion-reduce:dark:hover:text-brand-accent",
-
-      // ring behavior
       "hover:ring-2 hover:ring-offset-2 hover:ring-brand-teal",
       "dark:hover:ring-2 dark:hover:ring-offset-2 dark:hover:ring-brand-accent dark:hover:ring-offset-black",
-
-      // subtle shadow
       "shadow-md shadow-cyan-100/40 dark:shadow-brand-primary/40",
     ].join(" ")
   }
 
-  // primary button
   return [
-    // base colors
     "bg-brand-deep text-white shadow-md shadow-cyan-100/80",
     "dark:bg-brand-deep dark:text-white dark:shadow-brand-primary/60",
-
-    // ring behavior
     "hover:ring-2 hover:ring-offset-2 hover:ring-brand-teal",
     "dark:hover:ring-2 dark:hover:ring-offset-2 dark:hover:ring-brand-accent dark:hover:ring-offset-black",
-
-    // hover text color only when motion is allowed
-    "motion-safe:hover:text-white",
-    "dark:motion-safe:hover:text-brand-primary",
-
-    // no motion-reduce text utilities so text stays white there
   ].join(" ")
 })
 
-const overlayClasses = computed(() => {
-  if (variant.value === "secondary") {
-    return "bg-brand-deep dark:bg-brand-accent origin-right"
-  }
-
-  return "bg-brand-hover dark:bg-brand-accent origin-left"
-})
+const overlayClasses = computed(() =>
+  variant.value === "secondary"
+    ? "bg-brand-deep dark:bg-brand-accent origin-right"
+    : "bg-brand-hover dark:bg-brand-accent origin-left"
+)
 
 const widthClass = computed(() => (props.fullWidth ? "w-full" : "w-auto"))
 </script>
@@ -85,21 +72,18 @@ const widthClass = computed(() => (props.fullWidth ? "w-full" : "w-auto"))
   <button
     :type="props.type || 'button'"
     :disabled="props.disabled"
-    :class="[baseClasses, motionClasses, variantClasses, widthClass]"
+    :class="[baseClasses, !props.disabled && motionClasses, variantClasses, widthClass]"
   >
-    <!-- background sweep -->
     <span
       aria-hidden="true"
       :class="[
         'pointer-events-none absolute inset-0 rounded-full z-0',
         'scale-x-0',
-        'motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out',
-        'motion-safe:group-hover:scale-x-100',
+        !props.disabled && 'motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-safe:group-hover:scale-x-100',
         'motion-reduce:hidden',
         overlayClasses,
       ]"
     />
-
     <span class="relative z-10 flex items-center gap-2">
       <slot />
     </span>
