@@ -64,6 +64,13 @@ const onNext = () => {
 const onBack = () => {
   if (currentStep.value > 1) currentStep.value--
 }
+const progressLabel = computed(
+  () => `Intake progress: step ${currentStep.value} of ${totalSteps}`
+)
+
+const progressValueText = computed(
+  () => `Step ${currentStep.value} of ${totalSteps}`
+)
 
 const resetForm = () => {
   currentStep.value = 1
@@ -105,7 +112,7 @@ const handleSubmit = () => {
           </p>
         </div>
 
-        <div class="hidden text-right text-sm text-slate-500 dark:text-slate-300 sm:block">
+        <div class="hidden text-right text-sm text-slate-600 dark:text-slate-300 sm:block">
           <p class="font-semibold text-brand-primary dark:text-brand-chip">
             Step {{ currentStep }} of {{ totalSteps }}
           </p>
@@ -115,18 +122,21 @@ const handleSubmit = () => {
         </div>
       </div>
 
-      <div
-        class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"
-        role="progressbar"
-        :aria-valuenow="progressPercent"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      >
-        <div
-          class="h-full bg-gradient-to-r from-brand-teal via-brand-accent to-brand-deep motion-safe:transition-[width]"
-          :style="{ width: progressPercent + '%' }"
-        />
-      </div>
+  <div
+  class="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800"
+  role="progressbar"
+  :aria-valuenow="progressPercent"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  :aria-label="progressLabel"
+  :aria-valuetext="progressValueText"
+>
+  <div
+    class="h-full bg-gradient-to-r from-brand-teal via-brand-accent to-brand-deep motion-safe:transition-[width]"
+    :style="{ width: progressPercent + '%' }"
+  />
+</div>
+
     </header>
 
     <form

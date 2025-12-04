@@ -122,7 +122,7 @@ const handleNext = async () => {
 
       <p
         id="contact-helper"
-        class="text-sm text-slate-500 dark:text-slate-300"
+        class="text-sm text-slate-600 dark:text-slate-300"
       >
         We use this info to send appointment details and secure visit links.
       </p>
@@ -164,7 +164,7 @@ const handleNext = async () => {
             autocomplete="name"
             :aria-invalid="!!errors.name"
             :aria-describedby="errors.name ? 'contact-name-error' : undefined"
-            class="block w-full rounded-2xl border bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
+            class="block w-full rounded-2xl border bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
             :class="errors.name
               ? 'border-rose-600 dark:border-rose-500'
               : 'border-slate-200 dark:border-slate-700'"
@@ -211,7 +211,7 @@ const handleNext = async () => {
             inputmode="tel"
             :aria-invalid="!!errors.phone"
             :aria-describedby="errors.phone ? 'contact-phone-error' : undefined"
-            class="block w-full rounded-2xl border bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
+            class="block w-full rounded-2xl border bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
             :class="errors.phone
               ? 'border-rose-600 dark:border-rose-500'
               : 'border-slate-200 dark:border-slate-700'"
@@ -258,7 +258,7 @@ const handleNext = async () => {
           autocomplete="email"
           :aria-invalid="!!errors.email"
           :aria-describedby="errors.email ? 'contact-email-error' : undefined"
-          class="block w-full rounded-2xl border bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
+          class="block w-full rounded-2xl border bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
           :class="errors.email
             ? 'border-rose-600 dark:border-rose-500'
             : 'border-slate-200 dark:border-slate-700'"
@@ -283,14 +283,14 @@ const handleNext = async () => {
         Anything else you want us to know?
       </legend>
 
-      <p class="text-sm text-slate-500 dark:text-slate-300">
+      <p class="text-sm text-slate-600 dark:text-slate-300">
         You can share goals, timing preferences, or any concerns you would like your clinician to see first.
       </p>
 
       <textarea
         name="note"
         rows="4"
-        class="block w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
+        class="block w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
         placeholder="Optional: Tell us about your goals, timing, or anything important to you."
         :value="contact.note"
         @input="updateField('note', ($event.target as HTMLTextAreaElement).value)"

@@ -79,7 +79,7 @@ const selectReason = (id: string) => {
 
       <p
         id="reason-helper"
-        class="text-sm text-slate-500 dark:text-slate-300"
+        class="text-sm text-slate-600 dark:text-slate-300"
       >
         Choose the one that feels closest. You can add more detail later.
       </p>
@@ -129,7 +129,7 @@ const selectReason = (id: string) => {
 
               <!-- chip -->
               <span
-                class="rounded-full bg-slate-100 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-slate-500 group-hover:bg-brand-chip group-focus:bg-brand-chip dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-slate-700 dark:group-focus:bg-slate-700"
+                class="rounded-full bg-slate-100 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-slate-700 group-hover:bg-brand-chip group-focus:bg-brand-chip dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-slate-700 dark:group-focus:bg-slate-700"
               >
                 {{ item.chip }}
               </span>
@@ -156,7 +156,7 @@ const selectReason = (id: string) => {
     </fieldset>
 
     <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-      <p class="text-sm text-slate-500 dark:text-slate-300">
+      <p class="text-sm text-slate-600 dark:text-slate-300">
         You can change this later in your visit summary.
       </p>
 

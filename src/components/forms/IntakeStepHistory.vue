@@ -81,7 +81,7 @@ const isSelected = (id: string) => props.history.conditions.includes(id)
 
       <p
         id="conditions-helper"
-        class="text-sm text-slate-500 dark:text-slate-300"
+        class="text-sm text-slate-600 dark:text-slate-300"
       >
         This helps your clinician understand your risk factors. Select all that apply.
       </p>
@@ -122,7 +122,7 @@ const isSelected = (id: string) => props.history.conditions.includes(id)
             </span>
             <span
               v-if="condition.id === 'none'"
-              class="text-xs text-slate-500 dark:text-slate-400"
+              class="text-xs text-slate-600 dark:text-slate-400"
             >
               If checked, we will treat this as no major chronic conditions.
             </span>
@@ -136,14 +136,14 @@ const isSelected = (id: string) => props.history.conditions.includes(id)
         Current medications
       </legend>
 
-      <p class="text-sm text-slate-500 dark:text-slate-300">
+      <p class="text-sm text-slate-600 dark:text-slate-300">
         List any prescription or over the counter medications you are taking, especially for weight, blood pressure, or mood.
       </p>
 
       <textarea
         name="medications"
         rows="4"
-        class="block w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
+        class="block w-full rounded-2xl border border-slate-200 bg-slate-50/60 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-50 dark:placeholder:text-slate-500 dark:focus-visible:ring-brand-accent dark:focus-visible:ring-offset-slate-950"
         placeholder="For example: metformin, Ozempic, blood pressure medicine, antidepressants..."
         :value="history.meds"
         @input="updateMeds(($event.target as HTMLTextAreaElement).value)"
