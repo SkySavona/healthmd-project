@@ -56,7 +56,7 @@ const hasConditions = (history: History) => {
       <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-50">
         Review your details
       </h2>
-      <p class="text-sm text-slate-500 dark:text-slate-300">
+      <p class="text-sm text-slate-600 dark:text-slate-300">
         Take a moment to confirm everything looks right before you send your intake to the clinical team.
       </p>
     </header>
@@ -111,7 +111,7 @@ const hasConditions = (history: History) => {
                 <li
                   v-for="condition in history.conditions"
                   :key="condition"
-                  class="mt-1 inline-flex items-center rounded-full bg-brand-chip px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-brand-primary dark:bg-slate-800 dark:text-slate-100"
+                  class="mt-1 inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-[0.72rem] font-medium uppercase tracking-wide text-slate-700 dark:bg-slate-800 dark:text-slate-100"
                 >
                   {{ condition }}
                 </li>
@@ -208,7 +208,7 @@ const hasConditions = (history: History) => {
       </dl>
     </section>
 
-    <p class="text-xs text-slate-500 dark:text-slate-400">
+    <p class="text-sm text-slate-600 dark:text-slate-400">
       By submitting, you agree to receive visit reminders and clinical messages related to your care.
     </p>
 
